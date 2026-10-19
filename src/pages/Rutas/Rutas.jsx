@@ -167,6 +167,18 @@ export default function Rutas() {
     return comuna ? comuna.nombre : "Sin comuna";
   };
 
+  /**
+   * Barrios que recorre la ruta, en orden de parada.
+   * El backend los envía solo en el detalle, así que el listado puede
+   * venir sin ellos: en ese caso se muestra «—».
+   */
+  const getBarrios = (ruta) =>
+    ruta.barrios?.length ? ruta.barrios.map((b) => b.nombre).join(" · ") : "—";
+
+  /** Pasaje del recorrido. */
+  const getPasaje = (ruta) =>
+    ruta.costo === null || ruta.costo === undefined ? "—" : `$${ruta.costo}`;
+
   const sortOptions = [
     { value: "id", label: "ID" },
     { value: "nombre", label: "Nombre" },
@@ -246,8 +258,10 @@ export default function Rutas() {
                           <th>Nombre</th>
                           <th>Origen</th>
                           <th>Destino</th>
+                          <th>Barrios</th>
                           <th>Distancia (km)</th>
                           <th>Tiempo (min)</th>
+                          <th>Pasaje</th>
                           <th>Acciones</th>
                         </tr>
                       </thead>
@@ -261,8 +275,10 @@ export default function Rutas() {
                               </td>
                               <td>{getComunaNombre(ruta.origen?.id)}</td>
                               <td>{getComunaNombre(ruta.destino?.id)}</td>
+                              <td>{getBarrios(ruta)}</td>
                               <td>{ruta.distanciaKm || "-"}</td>
                               <td>{ruta.tiempoEstimadoMinutos || "-"}</td>
+                              <td>{getPasaje(ruta)}</td>
                               <td>
                                 <ActionsMenu
                                   onEdit={() => handleEditar(ruta)}
@@ -273,7 +289,7 @@ export default function Rutas() {
                           ))
                         ) : (
                           <tr>
-                            <td colSpan="7" className="text-center">
+                            <td colSpan="9" className="text-center">
                               No se encontraron rutas
                             </td>
                           </tr>
@@ -296,6 +312,7 @@ export default function Rutas() {
                                   Destino: {getComunaNombre(ruta.destino?.id)}
                                 </p>
                                 <p>Distancia: {ruta.distanciaKm || "-"} km</p>
+                                <p>Barrios: {getBarrios(ruta)}</p>
                               </div>
                             </div>
 
@@ -305,6 +322,10 @@ export default function Rutas() {
                                 <span>
                                   {ruta.tiempoEstimadoMinutos || "-"} min
                                 </span>
+                              </div>
+                              <div className="mobile-card-row">
+                                <span>Pasaje</span>
+                                <span>{getPasaje(ruta)}</span>
                               </div>
                             </div>
 
