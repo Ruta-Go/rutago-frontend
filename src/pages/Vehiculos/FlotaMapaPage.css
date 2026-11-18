@@ -1,0 +1,139 @@
+.flota-page {
+  padding: 1.5rem;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.flota-encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.flota-encabezado h1 {
+  margin: 0;
+  color: #202936;
+}
+
+.flota-conexion {
+  margin: 0.25rem 0 0;
+  color: #687385;
+  font-size: 0.85rem;
+}
+
+.flota-cargando {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem;
+  color: #687385;
+}
+
+.flota-contenido {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr);
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.flota-mapa {
+  background: #fff;
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+.flota-leyenda {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0.75rem 0 0;
+  color: #374151;
+  font-size: 0.8rem;
+}
+
+.punto {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-left: 0.75rem;
+}
+
+.punto:first-child {
+  margin-left: 0;
+}
+
+.punto.verde {
+  background: #2ecc71;
+}
+
+.punto.gris {
+  background: #95a5a6;
+}
+
+.flota-nota {
+  margin: 0.5rem 0 0;
+  color: #9ca3af;
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.flota-lista {
+  background: #fff;
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  max-height: 620px;
+  overflow-y: auto;
+}
+
+.flota-lista h2 {
+  margin: 0 0 0.75rem;
+  color: #202936;
+  font-size: 1rem;
+}
+
+.flota-vacio {
+  color: #687385;
+  font-size: 0.85rem;
+}
+
+.flota-item {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 0.75rem;
+  margin-bottom: 0.6rem;
+}
+
+.flota-item-titulo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  color: #07883f;
+}
+
+.flota-chip {
+  background: #e6f4ec;
+  color: #07883f;
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+.flota-item-dato {
+  color: #374151;
+  font-size: 0.78rem;
+  margin-top: 4px;
+}
+
+@media (max-width: 900px) {
+  .flota-contenido {
+    grid-template-columns: 1fr;
+  }
+}

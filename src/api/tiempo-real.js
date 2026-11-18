@@ -14,8 +14,10 @@ function construirUrlWebSocket() {
 
 export const WS_URL = construirUrlWebSocket();
 
-export function conectarTiempoReal(token, sala, onEvento, onEstado) {
-  if (!token || !sala) {
+export function conectarTiempoReal(token, salas, onEvento, onEstado) {
+  const listaSalas = (Array.isArray(salas) ? salas : [salas]).filter(Boolean);
+
+  if (!token || listaSalas.length === 0) {
     onEstado?.("sin-token");
     return null;
   }
@@ -23,7 +25,9 @@ export function conectarTiempoReal(token, sala, onEvento, onEstado) {
   const socket = new WebSocket(`${WS_URL}?token=${encodeURIComponent(token)}`);
 
   socket.onopen = () => {
-    socket.send(JSON.stringify({ tipo: "suscribirse", sala }));
+    listaSalas.forEach((sala) => {
+      socket.send(JSON.stringify({ tipo: "suscribirse", sala }));
+    });
     onEstado?.("conectado");
   };
 

@@ -28,7 +28,8 @@ export default function Sidebar({ rolNombre = "Pasajero" }) {
         { to: "/usuarios", label: "Usuarios", icon: Users },
         { to: "/pasajeros", label: "Pasajeros", icon: UserCheck },
         { to: "/conductores", label: "Conductores", icon: Car },
-        { to: "/vehiculos", label: "Vehículos", icon: Truck },
+        { to: "/vehiculos", label: "Vehículos", icon: Truck, end: true },
+        { to: "/vehiculos/mapa", label: "Mapa de flota", icon: MapPin },
         { to: "/barrios", label: "Barrios", icon: MapPin },
         { to: "/comunas", label: "Comunas", icon: Building2 },
         { to: "/rutas", label: "Rutas", icon: Route },
@@ -58,7 +59,8 @@ export default function Sidebar({ rolNombre = "Pasajero" }) {
       modulos: [
         { to: "/dashboard", label: "Inicio", icon: LayoutDashboard, end: true },
         { to: "/perfil", label: "Mi perfil", icon: User },
-        { to: "/vehiculos", label: "Vehículos", icon: Truck },
+        { to: "/vehiculos", label: "Vehículos", icon: Truck, end: true },
+        { to: "/vehiculos/mapa", label: "Mapa de flota", icon: MapPin },
       ],
     },
   };

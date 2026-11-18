@@ -13,6 +13,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import Pasajeros from "./pages/Pasajeros/Pasajeros";
 import Conductores from "./pages/Conductores/Conductores";
 import Vehiculos from "./pages/Vehiculos/Vehiculos";
+import FlotaMapaPage from "./pages/Vehiculos/FlotaMapaPage";
 import Barrios from "./pages/Barrios/Barrios";
 import Comunas from "./pages/Comunas/Comunas";
 import Rutas from "./pages/Rutas/Rutas";
@@ -177,6 +178,14 @@ export default function App() {
                   element={
                     <ProtectedRoute allowedRoles={[ROLES.ADMIN, ROLES.ENTIDAD]}>
                       <Vehiculos />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/vehiculos/mapa"
+                  element={
+                    <ProtectedRoute allowedRoles={[ROLES.ADMIN, ROLES.ENTIDAD]}>
+                      <FlotaMapaPage />
                     </ProtectedRoute>
                   }
                 />
