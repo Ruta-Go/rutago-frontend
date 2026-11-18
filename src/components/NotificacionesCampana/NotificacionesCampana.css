@@ -1,0 +1,123 @@
+.notificaciones-campana {
+  position: relative;
+  margin-right: 0.75rem;
+}
+
+.notificaciones-boton {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border: 1px solid #e5e7eb;
+  border-radius: 999px;
+  background: #ffffff;
+  cursor: pointer;
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.notificaciones-boton:hover {
+  border-color: #07883f;
+}
+
+.notificaciones-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: #07883f;
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 18px;
+  text-align: center;
+}
+
+.notificaciones-panel {
+  position: absolute;
+  right: 0;
+  top: 48px;
+  z-index: 50;
+  width: 340px;
+  max-width: 85vw;
+  max-height: 420px;
+  overflow-y: auto;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.15);
+}
+
+.notificaciones-encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  border-bottom: 1px solid #f3f4f6;
+  color: #202936;
+  font-size: 0.9rem;
+}
+
+.notificaciones-encabezado span {
+  color: #07883f;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.notificaciones-vacio {
+  margin: 0;
+  padding: 20px 14px;
+  color: #687385;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.notificaciones-lista {
+  display: flex;
+  flex-direction: column;
+}
+
+.notificacion-item {
+  padding: 12px 14px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.notificacion-item.no-leida {
+  background: #f6fbf8;
+  border-left: 3px solid #07883f;
+}
+
+.notificacion-titulo {
+  color: #202936;
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.notificacion-mensaje {
+  margin-top: 4px;
+  color: #374151;
+  font-size: 0.8rem;
+  line-height: 1.35;
+}
+
+.notificacion-pie {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  color: #9ca3af;
+  font-size: 0.7rem;
+}
+
+.notificacion-pie button {
+  border: none;
+  background: transparent;
+  color: #07883f;
+  cursor: pointer;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0;
+}

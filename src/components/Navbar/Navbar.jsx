@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useLayout } from "../../hooks/useLayout";
 import { useAuth } from "../../hooks/useAuth";
 import Logo from "../Logo/Logo";
+import NotificacionesCampana from "../NotificacionesCampana/NotificacionesCampana";
 import "./Navbar.css";
 
 export default function Navbar({ user }) {
@@ -52,38 +53,43 @@ export default function Navbar({ user }) {
 
       <div className="navbar-right">
         {isLoggedIn ? (
-          <div className="user-dropdown" ref={dropdownRef}>
-            <button
-              className="user-dropdown-toggle"
-              onClick={() => setDropdownOpen((v) => !v)}
-            >
-              <span className="user-avatar">
-                {user?.nombres?.charAt(0) || "U"}
-              </span>
-              <span className="user-name">{user?.nombres || "Usuario"}</span>
-              <span className={`dropdown-arrow ${dropdownOpen ? "open" : ""}`}>
-                &#9660;
-              </span>
-            </button>
-            {dropdownOpen && (
-              <div className="user-dropdown-menu">
-                <Link
-                  to="/perfil"
-                  className="dropdown-item"
-                  onClick={() => setDropdownOpen(false)}
+          <>
+            <NotificacionesCampana user={user} />
+            <div className="user-dropdown" ref={dropdownRef}>
+              <button
+                className="user-dropdown-toggle"
+                onClick={() => setDropdownOpen((v) => !v)}
+              >
+                <span className="user-avatar">
+                  {user?.nombres?.charAt(0) || "U"}
+                </span>
+                <span className="user-name">{user?.nombres || "Usuario"}</span>
+                <span
+                  className={`dropdown-arrow ${dropdownOpen ? "open" : ""}`}
                 >
-                  Mi Perfil
-                </Link>
-                <hr className="dropdown-divider" />
-                <button
-                  className="dropdown-item dropdown-item-danger"
-                  onClick={handleLogout}
-                >
-                  Cerrar Sesión
-                </button>
-              </div>
-            )}
-          </div>
+                  &#9660;
+                </span>
+              </button>
+              {dropdownOpen && (
+                <div className="user-dropdown-menu">
+                  <Link
+                    to="/perfil"
+                    className="dropdown-item"
+                    onClick={() => setDropdownOpen(false)}
+                  >
+                    Mi Perfil
+                  </Link>
+                  <hr className="dropdown-divider" />
+                  <button
+                    className="dropdown-item dropdown-item-danger"
+                    onClick={handleLogout}
+                  >
+                    Cerrar Sesión
+                  </button>
+                </div>
+              )}
+            </div>
+          </>
         ) : (
           <div className="navbar-links">
             {!ocultarEn.includes(location.pathname) && (
