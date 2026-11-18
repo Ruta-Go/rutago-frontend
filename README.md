@@ -129,7 +129,10 @@ Crear archivo `.env` en la raíz:
 
 ```env
 VITE_API_URL=http://localhost:8082/api
+VITE_OSRM_URL=https://router.project-osrm.org
 ```
+
+En CI, el workflow genera `.env.production` con los secrets `BACKEND_URL`, `OSRM_URL` y `SSH_PORT`; ese archivo no se versiona.
 
 ---
 
@@ -214,7 +217,6 @@ rutago-frontend/
 │   └── main.jsx            # Punto de entrada
 ├── index.html
 ├── .env.example
-├── .env.production
 ├── .gitignore
 ├── eslint.config.js
 ├── package.json

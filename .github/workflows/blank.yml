@@ -19,12 +19,14 @@ jobs:
           cache: "npm"
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Build React Project
         run: |
-          # Variable corregida a VITE_API_URL para coincidir con tu código
-          echo "VITE_API_URL=${{ secrets.BACKEND_URL }}" >> .env.production
+          # Se sobrescribe (no se acumula) para evitar variables duplicadas.
+          printf 'VITE_API_URL=%s\nVITE_OSRM_URL=%s\n' \
+            "${{ secrets.BACKEND_URL }}" \
+            "${{ secrets.OSRM_URL || 'https://router.project-osrm.org' }}" > .env.production
           npm run build
 
       - name: Compress Dist Folder
@@ -36,7 +38,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER_NAME_RUTA_GO }}
           key: ${{ secrets.PASSWORD_SSH }}
-          port: 22
+          port: ${{ secrets.SSH_PORT || 22 }}
           source: "front.tar.gz"
           target: "/home/${{ secrets.USER_NAME_RUTA_GO }}/front_tmp/"
 
@@ -46,7 +48,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER_NAME_RUTA_GO }}
           key: ${{ secrets.PASSWORD_SSH }}
-          port: 22
+          port: ${{ secrets.SSH_PORT || 22 }}
           script: |
             cd ~/front_tmp
             tar -xzf front.tar.gz
