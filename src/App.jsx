@@ -64,10 +64,14 @@ export default function App() {
         const response = await usuariosService.verificarToken();
 
         if (response.success && response.usuario) {
+          const usuario = response.usuario;
           const userActualizado = {
-            ...user,
-            token,
-            usuario: response.usuario,
+            id: usuario.id,
+            nombres: usuario.nombres,
+            apellidos: usuario.apellidos,
+            correo: usuario.correo,
+            rolId: usuario.rolId ?? usuario.rol?.id,
+            rol: usuario.rol ?? { id: usuario.rolId },
           };
           localStorage.setItem("rutago_user", JSON.stringify(userActualizado));
           setUser(userActualizado);
@@ -75,6 +79,7 @@ export default function App() {
       } catch (error) {
         console.error("Token inválido o expirado:", error);
         localStorage.removeItem("token");
+        localStorage.removeItem("refreshToken");
         localStorage.removeItem("rutago_user");
         setUser(null);
       } finally {

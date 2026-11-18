@@ -8,6 +8,7 @@ import { useEstadosVehiculo } from "../../hooks/useEstadosVehiculo";
 import ConductorPerfil from "./Conductor";
 import PasajeroPerfil from "./Pasajero";
 import EntidadPerfil from "./Entidad";
+import CambiarContrasena from "./CambiarContrasena";
 import "./Perfil.css";
 import { formatearHora } from "../../utils/formato";
 
@@ -27,8 +28,6 @@ export default function Perfil() {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [datosPerfil, setDatosPerfil] = useState(null);
-
-  const [tipoDocumentoOptions, setTipoDocumentoOptions] = useState([]);
 
   const [destino, setDestino] = useState("");
   const [resultados, setResultados] = useState([]);
@@ -96,21 +95,8 @@ export default function Perfil() {
     }
   };
 
-  const fetchTipoDocumentoOptions = async () => {
-    try {
-      const response = await api.get("/tipos-documento");
-      setTipoDocumentoOptions(response.data?.data || []);
-    } catch {
-      // fallback vacío
-    }
-  };
-
   useEffect(() => {
-    const load = async () => {
-      await fetchPerfil();
-      await fetchTipoDocumentoOptions();
-    };
-    load();
+    fetchPerfil();
   }, []);
 
   const handleChange = (e) => {
@@ -291,6 +277,7 @@ export default function Perfil() {
             </form>
           )}
         </div>
+        <CambiarContrasena />
       </div>
 
       {user.rol?.id === obtenerIdRol("Conductor") && datosPerfil && (
@@ -298,11 +285,7 @@ export default function Perfil() {
       )}
 
       {user.rol?.id === obtenerIdRol("Pasajero") && datosPerfil && (
-        <PasajeroPerfil
-          perfil={datosPerfil}
-          onRefresh={fetchPerfil}
-          tipoDocumentoOptions={tipoDocumentoOptions}
-        />
+        <PasajeroPerfil perfil={datosPerfil} onRefresh={fetchPerfil} />
       )}
 
       {user.rol?.id === obtenerIdRol("Entidad Externa") && datosPerfil && (

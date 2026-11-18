@@ -24,7 +24,7 @@ export default function Vehiculos() {
   const user = getInitialUser();
   const { opciones: opcionesEstadosVehiculo, nombre: nombreEstadoVehiculo } =
     useEstadosVehiculo();
-  const { obtenerId: obtenerIdRol, loading: loadingRoles } = useRoles();
+  const { loading: loadingRoles } = useRoles();
   const esAdmin = user?.rol?.nombreRol === "Administrador";
   const [vehiculos, setVehiculos] = useState([]);
   const [entidades, setEntidades] = useState([]);

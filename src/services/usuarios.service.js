@@ -60,6 +60,22 @@ export const usuariosService = {
       throw extractError(err, "Error al solicitar recuperación");
     }
   },
+  cambiarContrasenaConToken: async (token, nuevaContrasena) => {
+    try {
+      const res = await api.cambiarContrasenaConToken(token, nuevaContrasena);
+      return res.data;
+    } catch (err) {
+      throw extractError(err, "No se pudo cambiar la contraseña");
+    }
+  },
+  cambiarContrasenaPerfil: async (data) => {
+    try {
+      const res = await api.cambiarContrasenaPerfil(data);
+      return res.data;
+    } catch (err) {
+      throw extractError(err, "No se pudo cambiar la contraseña");
+    }
+  },
   verificarToken: async () => {
     try {
       const res = await api.verificarToken();

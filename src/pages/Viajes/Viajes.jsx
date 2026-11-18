@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Modal from "../../components/Modal/Modal";
-import MapaRutas from "../../components/MapaRutas/MapaRutas";
 import { useEstadosViaje } from "../../hooks/useEstadosViaje";
 import { useRoles } from "../../hooks/useRoles";
 import { viajesService } from "../../services/viajes.service";

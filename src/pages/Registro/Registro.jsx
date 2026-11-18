@@ -7,6 +7,9 @@ import Button from "../../components/Button/Button";
 import Card from "../../components/Card/Card";
 import "./Registro.css";
 
+// Misma política que el backend: 8 caracteres, al menos una letra y un número.
+const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
+
 function Registro() {
   const [formData, setFormData] = useState({
     nombres: "",
@@ -24,6 +27,13 @@ function Registro() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+
+    if (!PASSWORD_REGEX.test(formData.contrasena)) {
+      setError(
+        "La contraseña debe tener al menos 8 caracteres, una letra y un número.",
+      );
+      return;
+    }
 
     try {
       await usuariosService.create(formData);
@@ -88,6 +98,7 @@ function Registro() {
               onChange={handleChange}
               autoComplete="new-password"
             />
+            <small>8 caracteres mínimo, con al menos una letra y un número.</small>
           </div>
           <Button type="submit">Crear Cuenta</Button>
         </form>

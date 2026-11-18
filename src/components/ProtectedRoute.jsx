@@ -14,13 +14,14 @@ function getInitialUser() {
 export default function ProtectedRoute({ children, allowedRoles }) {
   const { isAuthenticated } = useAuth();
 
-  if (!isAuthenticated) {
+  const user = getInitialUser();
+
+  if (!isAuthenticated || !user) {
     return <Navigate to="/login" replace />;
   }
 
-  const user = getInitialUser();
-
-  if (allowedRoles && user && !allowedRoles.includes(user.rol?.id)) {
+  const rolId = user.rolId ?? user.rol?.id;
+  if (allowedRoles && !allowedRoles.includes(rolId)) {
     return <AccesoDenegado />;
   }
 

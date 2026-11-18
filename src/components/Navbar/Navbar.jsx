@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { useLayout } from "../../context/LayoutContext";
+import { useLayout } from "../../hooks/useLayout";
+import { useAuth } from "../../hooks/useAuth";
 import Logo from "../Logo/Logo";
 import "./Navbar.css";
 
@@ -20,9 +21,10 @@ export default function Navbar({ user }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const { logout } = useAuth();
+
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("rutago_user");
+    logout();
     window.location.replace("/login");
   };
 

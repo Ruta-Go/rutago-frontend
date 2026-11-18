@@ -14,7 +14,7 @@ import { formatearHora } from "../../utils/formato";
 import { Route, Clock, DollarSign, Users, LogOut, MapPin, Plus, Search, X } from "lucide-react";
 
 export default function ViajesPasajero({ onVerDetalle }) {
-  const { data: estadosViaje, nombre, ESTADO } = useEstadosViaje();
+  const { nombre, ESTADO } = useEstadosViaje();
   const [viajesDisponibles, setViajesDisponibles] = useState([]);
   const [misViajes, setMisViajes] = useState([]);
   const [loading, setLoading] = useState(true);

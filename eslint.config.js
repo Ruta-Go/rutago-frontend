@@ -17,5 +17,11 @@ export default defineConfig([
       globals: globals.browser,
       parserOptions: { ecmaFeatures: { jsx: true } },
     },
+    rules: {
+      // Los efectos de carga llaman a funciones asíncronas que actualizan
+      // estado después de await; la regla no distingue ese caso del estado
+      // sincrónico y genera falsos positivos en este proyecto.
+      "react-hooks/set-state-in-effect": "off",
+    },
   },
 ])

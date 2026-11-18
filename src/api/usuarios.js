@@ -14,6 +14,12 @@ export const changeRol = (id, rolId) =>
   api.put(`/usuarios/${id}/rol`, { rolId });
 
 export const solicitarRecuperacion = (correo) =>
-  api.post("/usuarios/recuperar-password", { correo });
+  api.post("/usuarios/recuperar-contrasena", { correo });
+
+export const cambiarContrasenaConToken = (token, nuevaContrasena) =>
+  api.post("/usuarios/cambiar-contrasena", { token, nuevaContrasena });
+
+export const cambiarContrasenaPerfil = (data) =>
+  api.put("/usuarios/me/contrasena", data);
 
 export const verificarToken = () => api.get("/auth/verificar-token");

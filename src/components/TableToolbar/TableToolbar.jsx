@@ -12,7 +12,7 @@ export default function TableToolbar({
   sortOrder,
   onSortChange,
 }) {
-  const [localSearch, setLocalSearch] = useState("");
+  const [localSearch, setLocalSearch] = useState(searchValue ?? "");
   const debounceRef = useRef(null);
 
   const handleSearchInput = (e) => {

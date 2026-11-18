@@ -2,11 +2,7 @@ import { useState } from "react";
 import { pasajeroService } from "../../services/pasajero.service";
 import { useTiposDocumento } from "../../hooks/useTiposDocumento";
 
-export default function Pasajero({
-  perfil,
-  onRefresh,
-  tipoDocumentoOptions,
-}) {
+export default function Pasajero({ perfil, onRefresh }) {
   const { opciones: opcionesTiposDocumento, data: tiposDocumento } = useTiposDocumento();
   const [editing, setEditing] = useState(false);
   const [formData, setFormData] = useState({

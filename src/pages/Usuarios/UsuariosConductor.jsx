@@ -1,7 +1,7 @@
 import { useEstadosConductor } from "../../hooks/useEstadosConductor";
 
 export default function UsuariosConductor({ formData, onChange }) {
-  const { nombre: nombreEstadoConductor, data: estadosConductor } = useEstadosConductor();
+  const { data: estadosConductor } = useEstadosConductor();
   return (
     <>
       <div style={{ marginBottom: "1rem" }}>

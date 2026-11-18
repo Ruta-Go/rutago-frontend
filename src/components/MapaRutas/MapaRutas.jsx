@@ -30,8 +30,6 @@ function svgMarkerIcon(color) {
   });
 }
 
-const iconCache = {};
-
 function TileLayerSwitcher() {
   const map = useMap();
 
@@ -110,7 +108,6 @@ export default function MapaRutas({ rutas = [], showSearch = false }) {
     <MapContainer
       center={BUENAVENTURA_CENTER}
       zoom={13}
-      zoom={13}
       style={{ height: "500px", width: "100%", borderRadius: "8px" }}
     >
       <style>{`.ruta-tooltip { font-size: 0.7rem; padding: 2px 6px; white-space: nowrap; } .ruta-linea { transition: stroke-width 0.25s ease, stroke-opacity 0.25s ease, filter 0.3s ease; }`}</style>
@@ -130,9 +127,7 @@ export default function MapaRutas({ rutas = [], showSearch = false }) {
             idx !== -1
               ? COMUNA_PALETTE[idx % COMUNA_PALETTE.length]
               : "#3498db";
-          if (!iconCache[colorHex])
-            iconCache[colorHex] = svgMarkerIcon(colorHex);
-          const icono = iconCache[colorHex];
+          const icono = svgMarkerIcon(colorHex);
           let coordenadas = null;
           if (ruta.rutaGeometria) {
             try {

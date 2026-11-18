@@ -1,6 +1,5 @@
-import { createContext, useContext, useState, useCallback } from "react";
-
-const LayoutContext = createContext();
+import { useState, useCallback } from "react";
+import { LayoutContext } from "./layout-context";
 
 export function LayoutProvider({ children }) {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -18,10 +17,4 @@ export function LayoutProvider({ children }) {
       {children}
     </LayoutContext.Provider>
   );
-}
-
-export function useLayout() {
-  const ctx = useContext(LayoutContext);
-  if (!ctx) throw new Error("useLayout debe usarse dentro de LayoutProvider");
-  return ctx;
 }

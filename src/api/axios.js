@@ -35,7 +35,8 @@ api.interceptors.response.use(
           localStorage.removeItem("token");
           localStorage.removeItem("refreshToken");
           localStorage.removeItem("rutago_user");
-          window.location.href = "/login";
+          if (!window.location.pathname.startsWith("/login"))
+            window.location.replace("/login");
           return false;
         } finally {
           refreshing = null;

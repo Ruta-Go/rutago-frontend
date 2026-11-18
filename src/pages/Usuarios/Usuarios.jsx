@@ -57,7 +57,7 @@ export default function Usuarios() {
   const [sortBy, setSortBy] = useState("id");
   const [sortOrder, setSortOrder] = useState("ASC");
 
-  const { opciones: opcionesRoles, nombre: nombreRol, data: roles } = useRoles();
+  const { opciones: opcionesRoles, nombre: nombreRol } = useRoles();
 
   const fetchUsuarios = async () => {
     try {

@@ -29,7 +29,6 @@ export default function Entidades() {
   const [editingEntidad, setEditingEntidad] = useState(null);
   const [formData, setFormData] = useState(emptyForm);
   const [saving, setSaving] = useState(false);
-  const [refreshKey, setRefreshKey] = useState(0);
   const {
     currentPage,
     itemsPerPage,
@@ -67,7 +66,6 @@ export default function Entidades() {
     currentPage,
     itemsPerPage,
     searchTerm,
-    refreshKey,
     sortBy,
     sortOrder,
     queryParams.paginaActual,
