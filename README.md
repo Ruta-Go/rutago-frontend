@@ -359,9 +359,11 @@ Cada ruta verifica el rol mediante el componente `ProtectedRoute` con la prop `a
 
 | Servicio            | URL                                                  | Verificación                 |
 | ------------------- | ---------------------------------------------------- | ---------------------------- |
-| Frontend (VPS)      | https://rutago.seminario1.eleueleo.com/              | Despliegue por GitHub Actions |
+| Frontend (VPS)      | https://rutago.seminario1.eleueleo.com/              | Dominio vencido (Hostinger) — no disponible |
 | Backend (Render)    | https://rutago-backend-a303.onrender.com/api         | `GET /api/ping` → 200          |
-| Backend (VPS, proxy)| https://rutago.seminario1.eleueleo.com/api           | TLS no validado desde este entorno |
+| Backend (VPS, proxy)| https://rutago.seminario1.eleueleo.com/api           | Dominio vencido (Hostinger) — no disponible |
+
+Nota: el dominio rutago.seminario1.eleueleo.com responde con la página de dominio vencido de Hostinger, por lo que los 4 checks funcionales de Fase 2 no se pueden ejecutar en vivo hasta renovarlo o publicar otra URL.
 
 En local configura `VITE_API_URL=http://localhost:8082/api`. El cliente usa `/api` por defecto sólo cuando el frontend y el backend están detrás del mismo proxy (VPS).
 
@@ -518,7 +520,7 @@ Proyecto académico desarrollado con fines educativos para la asignatura Seminar
 - [x] `npx vite build --outDir <ruta-temporal>` → compila 1995 módulos sin errores.
 - [x] `git push origin main` desde `rutago-frontend` (commit `8d511f7`, docs finales).
 - [x] Logout limpia `token`, `refreshToken` y `rutago_user`; `ProtectedRoute` exige sesión **y** perfil válido.
-- [ ] Verificación manual en vivo de los 4 checks de Fase 2 (requiere entorno desplegado).
+- [ ] Verificación manual en vivo de los 4 checks de Fase 2: bloqueada porque el dominio del frontend está vencido.
 
 ---
 
