@@ -1,7 +1,7 @@
 # 🚍 [**RutaGo**](https://rutago.seminario1.eleueleo.com/) - Frontend
 
-![React](https://img.shields.io/badge/React-18-61DAFB?style=flat&logo=react)
-![Vite](https://img.shields.io/badge/Vite-6-646CFF?style=flat&logo=vite)
+![React](https://img.shields.io/badge/React-19-61DAFB?style=flat&logo=react)
+![Vite](https://img.shields.io/badge/Vite-8-646CFF?style=flat&logo=vite)
 ![JavaScript](https://img.shields.io/badge/JavaScript-ES6-F7DF1E?style=flat&logo=javascript)
 ![Leaflet](https://img.shields.io/badge/Leaflet-1.9-199900?style=flat&logo=leaflet)
 ![Axios](https://img.shields.io/badge/Axios-1.7-5A29E4?style=flat&logo=axios)
@@ -88,8 +88,10 @@ RutaGo busca solucionar esta problemática mediante una plataforma moderna, senc
 
 - ✅ Registro
 - ✅ Inicio de sesión
-- ✅ Cerrar sesión
+- ✅ Cerrar sesión (borra access, refresh y perfil local)
 - ✅ Gestión de perfil
+- ✅ Recuperación y restablecimiento de contraseña con token
+- ✅ Cambio de contraseña autenticado desde el perfil
 
 #### Pasajeros
 
@@ -113,7 +115,6 @@ RutaGo busca solucionar esta problemática mediante una plataforma moderna, senc
 
 ### 🚧 En desarrollo
 
-- ⏳ Recuperación de contraseña
 - ⏳ Seguimiento GPS en tiempo real
 - ⏳ Estado de buses
 - ⏳ Notificaciones automáticas
@@ -140,6 +141,7 @@ VITE_API_URL=http://localhost:8082/api
 npm run dev
 npm run build    # construir para produccion
 npm run preview  # vista previa de la build
+npm run lint     # ESLint (0 errores; warnings no bloqueantes)
 ```
 
 ---
@@ -177,8 +179,8 @@ rutago-frontend/
 │   │   ├── Sidebar/
 │   │   └── TableToolbar/
 │   ├── config/             # Config (roles, constantes)
-│   ├── context/            # React Context (LayoutContext)
-│   ├── hooks/              # Custom hooks (useAuth)
+│   ├── context/            # React Context (LayoutContext + layout-context)
+│   ├── hooks/              # Custom hooks (useAuth, useLayout)
 │   ├── pages/
 │   │   ├── AccesoDenegado/
 │   │   ├── Barrios/
@@ -196,7 +198,7 @@ rutago-frontend/
 │   │   ├── Horarios/
 │   │   ├── Login/
 │   │   ├── Pasajeros/
-│   │   ├── Perfil/
+│   │   ├── Perfil/         # Incluye CambiarContrasena.jsx
 │   │   ├── RecuperarPassword/
 │   │   ├── Registro/
 │   │   ├── Rutas/
@@ -319,7 +321,7 @@ Cada ruta verifica el rol mediante el componente `ProtectedRoute` con la prop `a
 | Home (público)        | ✅     |
 | Login                 | ✅     |
 | Registro              | ✅     |
-| Recuperar contraseña  | ⏳     |
+| Recuperar/restablecer contraseña | ✅ |
 | Dashboard por rol     | ✅     |
 | Acceso Denegado (403) | ✅     |
 | Perfil                | ✅     |
@@ -353,10 +355,13 @@ Cada ruta verifica el rol mediante el componente `ProtectedRoute` con la prop `a
 
 ## 🔗 URLs desplegadas
 
-| Servicio | URL                                        |
-| -------- | ------------------------------------------ |
-| Frontend | https://rutago.seminario1.eleueleo.com/    |
-| Backend  | https://rutago.seminario1.eleueleo.com/api |
+| Servicio            | URL                                                  | Verificación                 |
+| ------------------- | ---------------------------------------------------- | ---------------------------- |
+| Frontend (VPS)      | https://rutago.seminario1.eleueleo.com/              | Despliegue por GitHub Actions |
+| Backend (Render)    | https://rutago-backend-a303.onrender.com/api         | `GET /api/ping` → 200          |
+| Backend (VPS, proxy)| https://rutago.seminario1.eleueleo.com/api           | TLS no validado desde este entorno |
+
+En local configura `VITE_API_URL=http://localhost:8082/api`. El cliente usa `/api` por defecto sólo cuando el frontend y el backend están detrás del mismo proxy (VPS).
 
 ---
 
@@ -457,7 +462,6 @@ Herramienta utilizada:
 
 ## 🚧 En desarrollo
 
-- Recuperación de contraseña (frontend).
 - PostGIS y geometrías espaciales.
 - Ubicación GPS en tiempo real.
 
@@ -506,12 +510,18 @@ Proyecto académico desarrollado con fines educativos para la asignatura Seminar
 
 ---
 
+## 🧪 Evidencia de cierre (Sprint 4)
+
+- [x] `npm run lint` → 0 errores (warnings de `exhaustive-deps` no bloqueantes).
+- [x] `npx vite build --outDir <ruta-temporal>` → compila 1995 módulos sin errores.
+- [x] `git push origin main` desde `rutago-frontend` (commit `8d511f7`, docs finales).
+- [x] Logout limpia `token`, `refreshToken` y `rutago_user`; `ProtectedRoute` exige sesión **y** perfil válido.
+- [ ] Verificación manual en vivo de los 4 checks de Fase 2 (requiere entorno desplegado).
+
+---
+
 <a id="repositorios"></a>
 
 # 🔗 Repositorios
 
-[**Backend**](https://github.com/seminario-actualizacion-1/rutago-backend)
-
-[**Trello**](https://trello.com/b/zR4MFcBH)
-
-prueba de integracion github slack
+[**SPRINTS.md**](SPRINTS.md) · [**Backend**](https://github.com/Ruta-Go/rutago-backend) · [**Móvil**](https://github.com/Ruta-Go/rutago-mobile) · [**Trello**](https://trello.com/b/zR4MFcBH)
