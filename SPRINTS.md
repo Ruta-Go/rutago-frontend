@@ -17,17 +17,21 @@ Cierre integral de RutaGo **sin reconstruir** el proyecto: se auditaron los tres
 | Sprint 4 · Documentación y verificación | Los tres | READMEs, `SPRINTS.md`, `.env.example` y evidencia de pruebas | Docs finales | Sí |
 | Sprint 5 · Auditoría final | Los tres | Sólo `.env.example` versionado, deploy sin generar `JWT_SECRET`, `npm ci` en CI web, CI móvil de tipos/lint | Auditoría final | Sí |
 | Sprint 6 · Continuación | Los tres | Verificación en vivo: backend 200, dominio VPS vencido; chequeo de entorno sin secretos y configuración EAS preparada | Verificación final | Sí |
+| Sprint 7 / T1 · Tiempo real y geoespacial | `rutago-backend` | WebSocket autenticado con salas autorizadas, GPS sobre REST existente, `POST /rutas/cercanas` con PostGIS/fallback JS | `46c5f1a` | No (restricción vigente) |
+| Sprint 7 / T2 · Notificaciones internas | `rutago-backend` | Tabla aditiva, endpoints propios, eventos reales de viaje y difusión WebSocket | `b6e9512` | No (restricción vigente) |
+| Sprint 7 / T3 · Móvil funcional | `rutago-mobile` | Mis viajes, Mis solicitudes, Mi perfil y Notificaciones conectados a API real + WebSocket | `908eec5` | No (restricción vigente) |
+| Sprint 7 / T4 · Mapa web en vivo | `rutago-frontend` | Posición inicial por REST y actualización por WebSocket en `/viajes/:id/mapa` | `f7a9cf3` | No (restricción vigente) |
 
 ## Verificación ejecutada
 
 | Repositorio | Comando | Resultado |
 | --- | --- | --- |
-| `rutago-backend` | `npm test` | 18/18 pruebas correctas |
+| `rutago-backend` | `npm test` | 35/35 pruebas correctas (18 originales + 17 de tiempo real, GPS, geobúsqueda y notificaciones) |
 | `rutago-frontend` | `npm run lint` | 0 errores; warnings no bloqueantes de `exhaustive-deps` |
-| `rutago-frontend` | `npx vite build --outDir <ruta-temporal>` | 1995 módulos transformados, sin errores |
+| `rutago-frontend` | `npx vite build --outDir <ruta-temporal>` | 1996 módulos transformados, sin errores |
 | `rutago-mobile` | `npx tsc --noEmit` | Sin errores |
-| `rutago-mobile` | `npx expo lint` | Sin errores |
-| `rutago-mobile` | `npx expo export --platform web --output-dir <ruta-temporal>` | 7 rutas estáticas exportadas |
+| `rutago-mobile` | `npm run lint` | Sin errores (equivale a `npx expo lint`) |
+| `rutago-mobile` | `npx expo export --platform web --output-dir <ruta-temporal>` | 14 bundles y 11 rutas estáticas exportadas, sin errores |
 | Backend en vivo | `GET https://rutago-backend-a303.onrender.com/api/ping` | 200 |
 | Frontend en vivo | `GET https://rutago.seminario1.eleueleo.com/` | Dominio vencido (Hostinger): los 4 checks de Fase 2 están bloqueados |
 | Backend | `npm run check:env` | Valida variables sin imprimir valores |
@@ -45,7 +49,7 @@ No se generaron artefactos (`dist`, `web-build`) dentro de los repositorios.
 5. **Horarios reales:** `GET /api/rutas/destino/:destino` devuelve `horarios: string[]`. El móvil muestra horas reales y **no inventa** placa, empresa ni estado de vehículo porque el DTO no los incluye.
 6. **Sin secretos:** `.env` nunca se publicó ni se incluyó en commits. Las variables públicas son sólo `VITE_API_URL` y `EXPO_PUBLIC_API_URL`.
 7. **CI/CD:** deploy web con `npm ci`; el script de producción ya **no genera** `JWT_SECRET` automáticamente (falla con mensaje si falta). El móvil tiene CI de `tsc`/lint; EAS build/submit sigue pendiente de credenciales.
-8. **Diferidos:** GPS/WebSocket/PostGIS, notificaciones push, CI/CD con EAS y pantallas móviles de gestión avanzada (se indica que están en la web, sin simular éxito).
+8. **Tiempo real implementado:** el mapa de viaje toma la posición inicial del REST y se suscribe a `viaje:<id>` por WebSocket con el token de sesión. Sin coordenadas reportadas, no dibuja un vehículo ficticio. Siguen diferidos la flota completa, las notificaciones web, el push del SO y EAS.
 9. **Estado del dominio:** `rutago.seminario1.eleueleo.com` responde con la página de dominio vencido de Hostinger; por eso no se pueden ejecutar los 4 checks de Fase 2 en vivo. El backend de Render sigue en 200. Renovar el dominio o publicar el frontend en otra URL antes de la demo.
 
 ## Restricciones respetadas

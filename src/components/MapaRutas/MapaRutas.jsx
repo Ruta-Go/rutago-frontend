@@ -77,7 +77,23 @@ function BuscadorMapa() {
   return null;
 }
 
-export default function MapaRutas({ rutas = [], showSearch = false }) {
+function SeguirVehiculo({ latitud, longitud }) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (Number.isFinite(latitud) && Number.isFinite(longitud)) {
+      map.setView([latitud, longitud], Math.max(map.getZoom(), 15));
+    }
+  }, [map, latitud, longitud]);
+
+  return null;
+}
+
+export default function MapaRutas({
+  rutas = [],
+  showSearch = false,
+  vehiculoUbicacion = null,
+}) {
   const [horariosPorRuta, setHorariosPorRuta] = useState({});
 
   useEffect(() => {
@@ -104,6 +120,14 @@ export default function MapaRutas({ rutas = [], showSearch = false }) {
     return oCoord && dCoord;
   });
 
+  const latVehiculo = Number(vehiculoUbicacion?.latitud);
+  const lonVehiculo = Number(vehiculoUbicacion?.longitud);
+  const hayUbicacionVehiculo =
+    vehiculoUbicacion?.latitud != null &&
+    vehiculoUbicacion?.longitud != null &&
+    Number.isFinite(latVehiculo) &&
+    Number.isFinite(lonVehiculo);
+
   return (
     <MapContainer
       center={BUENAVENTURA_CENTER}
@@ -113,6 +137,35 @@ export default function MapaRutas({ rutas = [], showSearch = false }) {
       <style>{`.ruta-tooltip { font-size: 0.7rem; padding: 2px 6px; white-space: nowrap; } .ruta-linea { transition: stroke-width 0.25s ease, stroke-opacity 0.25s ease, filter 0.3s ease; }`}</style>
       <TileLayerSwitcher />
       {showSearch && <BuscadorMapa />}
+      {hayUbicacionVehiculo && (
+        <>
+          <SeguirVehiculo latitud={latVehiculo} longitud={lonVehiculo} />
+          <Marker
+            position={[latVehiculo, lonVehiculo]}
+            icon={svgMarkerIcon("#e74c3c")}
+          >
+            <Popup>
+              <b>Vehículo {vehiculoUbicacion.placa || ""}</b>
+              <br />
+              Última actualización:{" "}
+              {vehiculoUbicacion.ultimaActualizacion
+                ? new Date(
+                    vehiculoUbicacion.ultimaActualizacion,
+                  ).toLocaleString()
+                : "no disponible"}
+              {vehiculoUbicacion.velocidadActual != null && (
+                <>
+                  <br />
+                  Velocidad: {vehiculoUbicacion.velocidadActual} km/h
+                </>
+              )}
+            </Popup>
+            <Tooltip permanent direction="top" className="ruta-tooltip">
+              Ubicación del vehículo
+            </Tooltip>
+          </Marker>
+        </>
+      )}
       {!rutasVisibles.length ? (
         <Marker position={BUENAVENTURA_CENTER}>
           <Popup>

@@ -336,6 +336,7 @@ Cada ruta verifica el rol mediante el componente `ProtectedRoute` con la prop `a
 | Entidades CRUD        | ✅     |
 | Horarios CRUD         | ✅     |
 | Viajes                | ✅     |
+| Mapa del viaje con ubicación en vivo | ✅ |
 | Usuarios CRUD         | ✅     |
 
 ---
@@ -461,21 +462,22 @@ Herramienta utilizada:
 - Datos reales de Buenaventura (12 comunas, 104 barrios).
 - API REST con paginación, búsqueda y ordenamiento.
 - Migraciones con Sequelize (estructura + catálogos).
+- Mapa del viaje conectado al WebSocket autenticado del backend: muestra la posición inicial leída de `GET /vehiculos/:id/ubicacion` y actualiza el marcador con eventos `ubicacion` reales. Si no hay coordenadas o el socket no conecta, no muestra un vehículo inventado.
 
 ---
 
 ## 🚧 En desarrollo
 
-- PostGIS y geometrías espaciales.
-- Ubicación GPS en tiempo real.
+- Vista de flota con el estado de todos los buses en un solo mapa (el backend ya publica eventos por vehículo y por viaje).
+- Geometrías PostGIS de comunas/barrios: el backend ya las consulta cuando la extensión existe, pero falta la capa visual dedicada.
 
 ---
 
 ## 📌 Pendiente
 
-- Seguimiento GPS en tiempo real.
-- Estado de buses en tiempo real.
-- Notificaciones automáticas.
+- Campana de notificaciones en el frontend: el backend y la app móvil ya consumen las notificaciones persistentes; falta el componente web.
+- Push/correo externo: requiere credenciales de proveedor.
+- Renovar el dominio del frontend para ejecutar los checks en vivo de Fase 2.
 
 ---
 
@@ -517,7 +519,8 @@ Proyecto académico desarrollado con fines educativos para la asignatura Seminar
 ## 🧪 Evidencia de cierre (Sprint 4)
 
 - [x] `npm run lint` → 0 errores (warnings de `exhaustive-deps` no bloqueantes).
-- [x] `npx vite build --outDir <ruta-temporal>` → compila 1995 módulos sin errores.
+- [x] `npx vite build --outDir <ruta-temporal>` → compila 1996 módulos sin errores (incluye el cliente WebSocket del mapa).
+- [x] Commit local del mapa en tiempo real sin push (restricción vigente).
 - [x] `git push origin main` desde `rutago-frontend` (commit `8d511f7`, docs finales).
 - [x] Logout limpia `token`, `refreshToken` y `rutago_user`; `ProtectedRoute` exige sesión **y** perfil válido.
 - [ ] Verificación manual en vivo de los 4 checks de Fase 2: bloqueada porque el dominio del frontend está vencido.

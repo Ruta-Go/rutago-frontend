@@ -17,6 +17,14 @@ const normalizePayload = (data) => {
 };
 
 export const vehiculosService = {
+  getUbicacion: async (id) => {
+    try {
+      const res = await api.getUbicacionVehiculo(id);
+      return res.data?.data ?? null;
+    } catch (err) {
+      throw extractError(err, "Error al cargar la ubicación del vehículo");
+    }
+  },
   getAll: async (params = {}) => {
     try {
       const res = await api.getVehiculos(params);
