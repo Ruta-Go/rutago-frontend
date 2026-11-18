@@ -113,11 +113,14 @@ RutaGo busca solucionar esta problemática mediante una plataforma moderna, senc
 - ✅ Gestión de Entidades
 - ✅ Gestión de Pasajeros
 
+### ✅ Tiempo real y notificaciones
+
+- ✅ Seguimiento GPS del viaje en tiempo real
+- ✅ Notificaciones internas automáticas
+
 ### 🚧 En desarrollo
 
-- ⏳ Seguimiento GPS en tiempo real
-- ⏳ Estado de buses
-- ⏳ Notificaciones automáticas
+- ⏳ Vista de flota / estado de buses
 
 ---
 
@@ -463,6 +466,7 @@ Herramienta utilizada:
 - API REST con paginación, búsqueda y ordenamiento.
 - Migraciones con Sequelize (estructura + catálogos).
 - Mapa del viaje conectado al WebSocket autenticado del backend: muestra la posición inicial leída de `GET /vehiculos/:id/ubicacion` y actualiza el marcador con eventos `ubicacion` reales. Si no hay coordenadas o el socket no conecta, no muestra un vehículo inventado.
+- Campana de notificaciones en el `Navbar`: consulta `GET /api/notificaciones`, permite `PATCH /api/notificaciones/:id/leida` y recarga la lista con los eventos WS `notificacion` / `notificacion_leida`. El contador sale sólo de registros reales.
 
 ---
 
@@ -475,8 +479,7 @@ Herramienta utilizada:
 
 ## 📌 Pendiente
 
-- Campana de notificaciones en el frontend: el backend y la app móvil ya consumen las notificaciones persistentes; falta el componente web.
-- Push/correo externo: requiere credenciales de proveedor.
+- Push/correo externo: requiere credenciales de proveedor; las notificaciones internas web y móvil ya funcionan.
 - Renovar el dominio del frontend para ejecutar los checks en vivo de Fase 2.
 
 ---
@@ -519,9 +522,9 @@ Proyecto académico desarrollado con fines educativos para la asignatura Seminar
 ## 🧪 Evidencia de cierre (Sprint 4)
 
 - [x] `npm run lint` → 0 errores (warnings de `exhaustive-deps` no bloqueantes).
-- [x] `npx vite build --outDir <ruta-temporal>` → compila 1996 módulos sin errores (incluye el cliente WebSocket del mapa).
-- [x] Commit local del mapa en tiempo real sin push (restricción vigente).
-- [x] `git push origin main` desde `rutago-frontend` (commit `8d511f7`, docs finales).
+- [x] `npx vite build --outDir <ruta-temporal>` → compila 1999 módulos sin errores (incluye el cliente WS del mapa y de la campana).
+- [x] `git push origin main` desde `rutago-frontend`: mapa en vivo `d63db00` y campana de notificaciones `e52d5a5`.
+- [x] `npm run lint` → 0 errores, 14 warnings no bloqueantes de `exhaustive-deps`.
 - [x] Logout limpia `token`, `refreshToken` y `rutago_user`; `ProtectedRoute` exige sesión **y** perfil válido.
 - [ ] Verificación manual en vivo de los 4 checks de Fase 2: bloqueada porque el dominio del frontend está vencido.
 
