@@ -17,11 +17,13 @@ Cierre integral de RutaGo **sin reconstruir** el proyecto: se auditaron los tres
 | Sprint 4 · Documentación y verificación | Los tres | READMEs, `SPRINTS.md`, `.env.example` y evidencia de pruebas | Docs finales | Sí |
 | Sprint 5 · Auditoría final | Los tres | Sólo `.env.example` versionado, deploy sin generar `JWT_SECRET`, `npm ci` en CI web, CI móvil de tipos/lint | Auditoría final | Sí |
 | Sprint 6 · Continuación | Los tres | Verificación en vivo: backend 200, dominio VPS vencido; chequeo de entorno sin secretos y configuración EAS preparada | Verificación final | Sí |
-| Sprint 7 / T1 · Tiempo real y geoespacial | `rutago-backend` | WebSocket autenticado con salas autorizadas, GPS sobre REST existente, `POST /rutas/cercanas` con PostGIS/fallback JS | `46c5f1a` | No (restricción vigente) |
-| Sprint 7 / T2 · Notificaciones internas | `rutago-backend` | Tabla aditiva, endpoints propios, eventos reales de viaje y difusión WebSocket | `b6e9512` | No (restricción vigente) |
-| Sprint 7 / T3 · Móvil funcional | `rutago-mobile` | Mis viajes, Mis solicitudes, Mi perfil y Notificaciones conectados a API real + WebSocket | `908eec5` | No (restricción vigente) |
-| Sprint 7 / T4 · Mapa web en vivo | `rutago-frontend` | Posición inicial por REST y actualización por WebSocket en `/viajes/:id/mapa` | `d63db00` | Sí (`34d719d..d63db00`) |
-| Sprint 7 / T5 · Campana de notificaciones | `rutago-frontend` | `GET/PATCH /notificaciones`, eventos WS `notificacion` y `notificacion_leida`, badge con datos reales en el `Navbar` | `e52d5a5` | Sí (`d63db00..e52d5a5`) |
+| Sprint 7 / T1 · Tiempo real y geoespacial | `rutago-backend` | WebSocket autenticado con salas autorizadas, GPS sobre REST existente, `POST /rutas/cercanas` con PostGIS/fallback JS | `46c5f1a` | Sí (`8287243..8ce0e3c`) |
+| Sprint 7 / T2 · Notificaciones internas | `rutago-backend` | Tabla aditiva, endpoints propios, eventos reales de viaje y difusión WebSocket | `b6e9512` | Sí (`8287243..8ce0e3c`) |
+| Sprint 7 / T3 · Móvil funcional | `rutago-mobile` | Mis viajes, Mis solicitudes, Mi perfil y Notificaciones conectados a API real + WebSocket | `908eec5` | Sí (`e29ba56..83437c1`) |
+| Sprint 7 / T4 · Mapa web en vivo | `rutago-frontend` | Posición inicial por REST y actualización por WebSocket en `/viajes/:id/mapa` | `d63db00` | Sí (`34d719d..903cefa`) |
+| Sprint 7 / T5 · Campana de notificaciones | `rutago-frontend` | `GET/PATCH /notificaciones`, eventos WS `notificacion` y `notificacion_leida`, badge con datos reales en el `Navbar` | `e52d5a5` | Sí (`34d719d..903cefa`) |
+| Sprint 7 / T6 · GPS en móvil | `rutago-mobile` | Coordenadas reales en Mis viajes con REST + sala `viaje:<id>` y apertura de mapa externo | `3ebcd76` | Sí (`270e45e..83437c1`) |
+| Sprint 7 / T7 · Mapa de flota | `rutago-frontend` | `/vehiculos/mapa`: posiciones iniciales de `GET /vehiculos`, eventos `ubicacion` por sala `vehiculo:<id>` y listado lateral real | `903cefa` | Sí (`fe09678..903cefa`) |
 
 ## Verificación ejecutada
 
@@ -29,7 +31,7 @@ Cierre integral de RutaGo **sin reconstruir** el proyecto: se auditaron los tres
 | --- | --- | --- |
 | `rutago-backend` | `npm test` | 35/35 pruebas correctas (18 originales + 17 de tiempo real, GPS, geobúsqueda y notificaciones) |
 | `rutago-frontend` | `npm run lint` | 0 errores; warnings no bloqueantes de `exhaustive-deps` |
-| `rutago-frontend` | `npx vite build --outDir <ruta-temporal>` | 1999 módulos transformados, sin errores |
+| `rutago-frontend` | `npx vite build --outDir <ruta-temporal>` | 2002 módulos transformados, sin errores |
 | `rutago-mobile` | `npx tsc --noEmit` | Sin errores |
 | `rutago-mobile` | `npm run lint` | Sin errores (equivale a `npx expo lint`) |
 | `rutago-mobile` | `npx expo export --platform web --output-dir <ruta-temporal>` | 14 bundles y 11 rutas estáticas exportadas, sin errores |
@@ -50,7 +52,7 @@ No se generaron artefactos (`dist`, `web-build`) dentro de los repositorios.
 5. **Horarios reales:** `GET /api/rutas/destino/:destino` devuelve `horarios: string[]`. El móvil muestra horas reales y **no inventa** placa, empresa ni estado de vehículo porque el DTO no los incluye.
 6. **Sin secretos:** `.env` nunca se publicó ni se incluyó en commits. Las variables públicas son sólo `VITE_API_URL` y `EXPO_PUBLIC_API_URL`.
 7. **CI/CD:** deploy web con `npm ci`; el script de producción ya **no genera** `JWT_SECRET` automáticamente (falla con mensaje si falta). El móvil tiene CI de `tsc`/lint; EAS build/submit sigue pendiente de credenciales.
-8. **Tiempo real implementado:** el mapa de viaje toma la posición inicial del REST y se suscribe a `viaje:<id>` por WebSocket con el token de sesión. Sin coordenadas reportadas, no dibuja un vehículo ficticio. La campana web recarga desde la API ante eventos `notificacion` / `notificacion_leida` en la sala `usuario:<id>`. Siguen diferidos la flota completa, el push del SO y EAS.
+8. **Tiempo real implementado:** el mapa de viaje toma la posición inicial del REST y se suscribe a `viaje:<id>` por WebSocket con el token de sesión. El mapa de flota hace lo propio desde `GET /vehiculos` y salas `vehiculo:<id>`. Sin coordenadas reportadas no se dibuja ningún vehículo ficticio. La campana web recarga desde la API ante eventos `notificacion` / `notificacion_leida` en la sala `usuario:<id>`. Siguen diferidos el push del SO, EAS y la capa visual de geometrías PostGIS.
 9. **Estado del dominio:** `rutago.seminario1.eleueleo.com` responde con la página de dominio vencido de Hostinger; por eso no se pueden ejecutar los 4 checks de Fase 2 en vivo. El backend de Render sigue en 200. Renovar el dominio o publicar el frontend en otra URL antes de la demo.
 
 ## Restricciones respetadas

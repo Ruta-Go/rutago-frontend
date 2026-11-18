@@ -467,12 +467,12 @@ Herramienta utilizada:
 - Migraciones con Sequelize (estructura + catálogos).
 - Mapa del viaje conectado al WebSocket autenticado del backend: muestra la posición inicial leída de `GET /vehiculos/:id/ubicacion` y actualiza el marcador con eventos `ubicacion` reales. Si no hay coordenadas o el socket no conecta, no muestra un vehículo inventado.
 - Campana de notificaciones en el `Navbar`: consulta `GET /api/notificaciones`, permite `PATCH /api/notificaciones/:id/leida` y recarga la lista con los eventos WS `notificacion` / `notificacion_leida`. El contador sale sólo de registros reales.
+- Mapa de flota en `/vehiculos/mapa`: posiciones iniciales de `GET /vehiculos`, actualizaciones `ubicacion` por salas `vehiculo:<id>` y listado lateral con estado real. Los marcadores verdes son eventos WS; los grises son el último dato del REST.
 
 ---
 
 ## 🚧 En desarrollo
 
-- Vista de flota con el estado de todos los buses en un solo mapa (el backend ya publica eventos por vehículo y por viaje).
 - Geometrías PostGIS de comunas/barrios: el backend ya las consulta cuando la extensión existe, pero falta la capa visual dedicada.
 
 ---
@@ -521,10 +521,9 @@ Proyecto académico desarrollado con fines educativos para la asignatura Seminar
 
 ## 🧪 Evidencia de cierre (Sprint 4)
 
-- [x] `npm run lint` → 0 errores (warnings de `exhaustive-deps` no bloqueantes).
-- [x] `npx vite build --outDir <ruta-temporal>` → compila 1999 módulos sin errores (incluye el cliente WS del mapa y de la campana).
-- [x] `git push origin main` desde `rutago-frontend`: mapa en vivo `d63db00` y campana de notificaciones `e52d5a5`.
 - [x] `npm run lint` → 0 errores, 14 warnings no bloqueantes de `exhaustive-deps`.
+- [x] `npx vite build --outDir <ruta-temporal>` → compila 2002 módulos sin errores (mapa de viaje, campana y mapa de flota).
+- [x] `git push origin main` desde `rutago-frontend`: `d63db00`, `e52d5a5`, `903cefa` y documentación asociada.
 - [x] Logout limpia `token`, `refreshToken` y `rutago_user`; `ProtectedRoute` exige sesión **y** perfil válido.
 - [ ] Verificación manual en vivo de los 4 checks de Fase 2: bloqueada porque el dominio del frontend está vencido.
 
